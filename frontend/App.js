@@ -10,7 +10,13 @@ import { AuthProvider } from './src/context/AuthContext';
 // Navigation
 import AppNavigator from './src/navigation/AppNavigator';
 
+// Test Component
+import DatePickerTest from './DatePickerTest';
+
 export default function App() {
+  // Uncomment this to test the date picker
+  // return <DatePickerTest />;
+
   return (
     <SafeAreaProvider>
       <PaperProvider>

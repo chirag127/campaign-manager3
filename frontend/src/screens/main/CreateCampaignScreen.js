@@ -25,14 +25,14 @@ import {
   List
 } from 'react-native-paper';
 import { Picker } from '@react-native-picker/picker';
-import DateTimePicker from '@react-native-community/datetimepicker';
+// Using Button and Alert for date selection instead of DateTimePicker
 import { Ionicons } from '@expo/vector-icons';
 import axios from 'axios';
 import { API_URL } from '../../config/api';
 
 const CreateCampaignScreen = ({ route, navigation }) => {
   const { campaignId, isEditing } = route.params || {};
-  
+
   // Form state
   const [formData, setFormData] = useState({
     name: '',
@@ -55,11 +55,10 @@ const CreateCampaignScreen = ({ route, navigation }) => {
       videos: []
     }
   });
-  
+
   // UI state
   const [isLoading, setIsLoading] = useState(false);
-  const [showStartDatePicker, setShowStartDatePicker] = useState(false);
-  const [showEndDatePicker, setShowEndDatePicker] = useState(false);
+  // Simplified date handling without DateTimePicker
   const [interestInput, setInterestInput] = useState('');
   const [locationInput, setLocationInput] = useState('');
   const [formErrors, setFormErrors] = useState({});
@@ -74,7 +73,7 @@ const CreateCampaignScreen = ({ route, navigation }) => {
   ]);
   const [currentStep, setCurrentStep] = useState(1);
   const [confirmDialog, setConfirmDialog] = useState(false);
-  
+
   // Campaign objectives
   const campaignObjectives = [
     { id: 'awareness', name: 'Brand Awareness' },
@@ -90,7 +89,7 @@ const CreateCampaignScreen = ({ route, navigation }) => {
     if (isEditing && campaignId) {
       fetchCampaignDetails();
     }
-    
+
     // Set the screen title
     navigation.setOptions({
       title: isEditing ? 'Edit Campaign' : 'Create Campaign'
@@ -103,7 +102,7 @@ const CreateCampaignScreen = ({ route, navigation }) => {
     try {
       const response = await axios.get(`${API_URL}/api/campaigns/${campaignId}`);
       const campaign = response.data.campaign;
-      
+
       // Update form data with campaign data
       setFormData({
         name: campaign.name,
@@ -140,7 +139,7 @@ const CreateCampaignScreen = ({ route, navigation }) => {
       ...prev,
       [field]: value
     }));
-    
+
     // Clear error for this field if exists
     if (formErrors[field]) {
       setFormErrors(prev => ({
@@ -158,7 +157,7 @@ const CreateCampaignScreen = ({ route, navigation }) => {
         [field]: value
       }
     }));
-    
+
     // Clear error for this field if exists
     if (formErrors[`${parent}.${field}`]) {
       setFormErrors(prev => ({
@@ -168,24 +167,31 @@ const CreateCampaignScreen = ({ route, navigation }) => {
     }
   };
 
-  const handleDateChange = (event, selectedDate, dateType) => {
-    if (Platform.OS === 'android') {
-      setShowStartDatePicker(false);
-      setShowEndDatePicker(false);
-    }
-    
-    if (selectedDate) {
-      setFormData(prev => ({
-        ...prev,
-        [dateType]: selectedDate
-      }));
-    }
+  // Simplified date handling functions
+  const handleStartDateChange = () => {
+    // For simplicity, just add 1 day to the current start date
+    const newDate = new Date(formData.startDate);
+    newDate.setDate(newDate.getDate() + 1);
+    setFormData(prev => ({
+      ...prev,
+      startDate: newDate
+    }));
+  };
+
+  const handleEndDateChange = () => {
+    // For simplicity, just add 1 day to the current end date
+    const newDate = new Date(formData.endDate);
+    newDate.setDate(newDate.getDate() + 1);
+    setFormData(prev => ({
+      ...prev,
+      endDate: newDate
+    }));
   };
 
   const togglePlatform = (platformId) => {
     setFormData(prev => {
       const isPlatformSelected = prev.platforms.includes(platformId);
-      
+
       if (isPlatformSelected) {
         // Remove platform
         return {
@@ -251,41 +257,41 @@ const CreateCampaignScreen = ({ route, navigation }) => {
   // Form validation
   const validateForm = () => {
     const errors = {};
-    
+
     // Required fields
     if (!formData.name.trim()) {
       errors.name = 'Campaign name is required';
     }
-    
+
     if (!formData.description.trim()) {
       errors.description = 'Campaign description is required';
     }
-    
+
     if (!formData.budget || isNaN(Number(formData.budget))) {
       errors.budget = 'Valid budget amount is required';
     }
-    
+
     if (formData.platforms.length === 0) {
       errors.platforms = 'At least one platform must be selected';
     }
-    
+
     if (formData.targetAudience.locations.length === 0) {
       errors['targetAudience.locations'] = 'At least one location is required';
     }
-    
+
     if (!formData.adCreatives.headline.trim()) {
       errors['adCreatives.headline'] = 'Ad headline is required';
     }
-    
+
     if (!formData.adCreatives.description.trim()) {
       errors['adCreatives.description'] = 'Ad description is required';
     }
-    
+
     // Validate dates
     if (formData.startDate >= formData.endDate) {
       errors.dates = 'End date must be after start date';
     }
-    
+
     setFormErrors(errors);
     return Object.keys(errors).length === 0;
   };
@@ -296,12 +302,12 @@ const CreateCampaignScreen = ({ route, navigation }) => {
       Alert.alert('Validation Error', 'Please fix the errors in the form.');
       return;
     }
-    
+
     setIsLoading(true);
-    
+
     try {
       let response;
-      
+
       if (isEditing) {
         // Update existing campaign
         response = await axios.put(
@@ -317,7 +323,7 @@ const CreateCampaignScreen = ({ route, navigation }) => {
         );
         Alert.alert('Success', 'Campaign created successfully');
       }
-      
+
       // Navigate to campaign detail screen
       navigation.replace('CampaignDetail', {
         id: isEditing ? campaignId : response.data.campaign._id,
@@ -348,7 +354,7 @@ const CreateCampaignScreen = ({ route, navigation }) => {
         return (
           <View style={styles.stepContainer}>
             <Headline style={styles.stepTitle}>Campaign Details</Headline>
-            
+
             <TextInput
               label="Campaign Name *"
               value={formData.name}
@@ -358,7 +364,7 @@ const CreateCampaignScreen = ({ route, navigation }) => {
               error={!!formErrors.name}
             />
             {formErrors.name && <HelperText type="error">{formErrors.name}</HelperText>}
-            
+
             <TextInput
               label="Description *"
               value={formData.description}
@@ -370,7 +376,7 @@ const CreateCampaignScreen = ({ route, navigation }) => {
               error={!!formErrors.description}
             />
             {formErrors.description && <HelperText type="error">{formErrors.description}</HelperText>}
-            
+
             <Text style={styles.label}>Campaign Objective *</Text>
             <View style={styles.pickerContainer}>
               <Picker
@@ -379,15 +385,15 @@ const CreateCampaignScreen = ({ route, navigation }) => {
                 style={styles.picker}
               >
                 {campaignObjectives.map(objective => (
-                  <Picker.Item 
-                    key={objective.id} 
-                    label={objective.name} 
-                    value={objective.id} 
+                  <Picker.Item
+                    key={objective.id}
+                    label={objective.name}
+                    value={objective.id}
                   />
                 ))}
               </Picker>
             </View>
-            
+
             <TextInput
               label="Budget (USD) *"
               value={formData.budget}
@@ -398,52 +404,34 @@ const CreateCampaignScreen = ({ route, navigation }) => {
               error={!!formErrors.budget}
             />
             {formErrors.budget && <HelperText type="error">{formErrors.budget}</HelperText>}
-            
+
             <Text style={styles.label}>Campaign Duration *</Text>
             <View style={styles.dateContainer}>
-              <Button 
-                mode="outlined" 
-                onPress={() => setShowStartDatePicker(true)}
+              <Button
+                mode="outlined"
+                onPress={handleStartDateChange}
                 style={styles.dateButton}
               >
-                Start: {formData.startDate.toLocaleDateString()}
+                Start: {formData.startDate.toLocaleDateString()} (Click to change)
               </Button>
-              
-              <Button 
-                mode="outlined" 
-                onPress={() => setShowEndDatePicker(true)}
+
+              <Button
+                mode="outlined"
+                onPress={handleEndDateChange}
                 style={styles.dateButton}
               >
-                End: {formData.endDate.toLocaleDateString()}
+                End: {formData.endDate.toLocaleDateString()} (Click to change)
               </Button>
             </View>
             {formErrors.dates && <HelperText type="error">{formErrors.dates}</HelperText>}
-            
-            {showStartDatePicker && (
-              <DateTimePicker
-                value={formData.startDate}
-                mode="date"
-                display="default"
-                onChange={(event, date) => handleDateChange(event, date, 'startDate')}
-              />
-            )}
-            
-            {showEndDatePicker && (
-              <DateTimePicker
-                value={formData.endDate}
-                mode="date"
-                display="default"
-                onChange={(event, date) => handleDateChange(event, date, 'endDate')}
-              />
-            )}
           </View>
         );
-        
+
       case 2:
         return (
           <View style={styles.stepContainer}>
             <Headline style={styles.stepTitle}>Target Audience</Headline>
-            
+
             <Text style={styles.label}>Age Range</Text>
             <View style={styles.rangeContainer}>
               <View style={styles.pickerContainerSmall}>
@@ -469,7 +457,7 @@ const CreateCampaignScreen = ({ route, navigation }) => {
                   ))}
                 </Picker>
               </View>
-              
+
               <View style={styles.pickerContainerSmall}>
                 <Text>Max Age:</Text>
                 <Picker
@@ -494,7 +482,7 @@ const CreateCampaignScreen = ({ route, navigation }) => {
                 </Picker>
               </View>
             </View>
-            
+
             <Text style={styles.label}>Gender</Text>
             <RadioButton.Group
               onValueChange={(value) => {
@@ -513,19 +501,19 @@ const CreateCampaignScreen = ({ route, navigation }) => {
                   <RadioButton value="all" />
                   <Text>All</Text>
                 </View>
-                
+
                 <View style={styles.radioButton}>
                   <RadioButton value="male" />
                   <Text>Male</Text>
                 </View>
-                
+
                 <View style={styles.radioButton}>
                   <RadioButton value="female" />
                   <Text>Female</Text>
                 </View>
               </View>
             </RadioButton.Group>
-            
+
             <Text style={styles.label}>Interests</Text>
             <View style={styles.inputWithButton}>
               <TextInput
@@ -550,7 +538,7 @@ const CreateCampaignScreen = ({ route, navigation }) => {
                 </Chip>
               ))}
             </View>
-            
+
             <Text style={styles.label}>Locations *</Text>
             <View style={styles.inputWithButton}>
               <TextInput
@@ -581,15 +569,15 @@ const CreateCampaignScreen = ({ route, navigation }) => {
             </View>
           </View>
         );
-        
+
       case 3:
         return (
           <View style={styles.stepContainer}>
             <Headline style={styles.stepTitle}>Platforms & Creatives</Headline>
-            
+
             <Text style={styles.label}>Select Platforms *</Text>
             {formErrors.platforms && <HelperText type="error">{formErrors.platforms}</HelperText>}
-            
+
             <View style={styles.platformsContainer}>
               {availablePlatforms.map((platform) => (
                 <Card
@@ -610,11 +598,11 @@ const CreateCampaignScreen = ({ route, navigation }) => {
                 </Card>
               ))}
             </View>
-            
+
             <Divider style={styles.divider} />
-            
+
             <Text style={styles.label}>Ad Creatives</Text>
-            
+
             <TextInput
               label="Headline *"
               value={formData.adCreatives.headline}
@@ -626,7 +614,7 @@ const CreateCampaignScreen = ({ route, navigation }) => {
             {formErrors['adCreatives.headline'] && (
               <HelperText type="error">{formErrors['adCreatives.headline']}</HelperText>
             )}
-            
+
             <TextInput
               label="Description *"
               value={formData.adCreatives.description}
@@ -640,7 +628,7 @@ const CreateCampaignScreen = ({ route, navigation }) => {
             {formErrors['adCreatives.description'] && (
               <HelperText type="error">{formErrors['adCreatives.description']}</HelperText>
             )}
-            
+
             <Button
               mode="outlined"
               icon="image"
@@ -649,7 +637,7 @@ const CreateCampaignScreen = ({ route, navigation }) => {
             >
               Upload Images
             </Button>
-            
+
             <Button
               mode="outlined"
               icon="video"
@@ -673,12 +661,12 @@ const CreateCampaignScreen = ({ route, navigation }) => {
         keyboardShouldPersistTaps="handled"
       >
         {isLoading && <ProgressBar indeterminate />}
-        
+
         {/* Step indicator */}
         <View style={styles.stepIndicator}>
           {[1, 2, 3].map((step) => (
-            <View 
-              key={step} 
+            <View
+              key={step}
               style={[
                 styles.stepDot,
                 currentStep === step ? styles.activeStepDot : null,
@@ -687,32 +675,32 @@ const CreateCampaignScreen = ({ route, navigation }) => {
             />
           ))}
         </View>
-        
+
         {renderStep()}
-        
+
         {/* Navigation buttons */}
         <View style={styles.navigationButtons}>
           {currentStep > 1 && (
-            <Button 
-              mode="outlined" 
+            <Button
+              mode="outlined"
               onPress={prevStep}
               style={styles.navButton}
             >
               Previous
             </Button>
           )}
-          
+
           {currentStep < 3 ? (
-            <Button 
-              mode="contained" 
+            <Button
+              mode="contained"
               onPress={nextStep}
               style={styles.navButton}
             >
               Next
             </Button>
           ) : (
-            <Button 
-              mode="contained" 
+            <Button
+              mode="contained"
               onPress={() => setConfirmDialog(true)}
               style={styles.navButton}
               disabled={isLoading}
@@ -722,7 +710,7 @@ const CreateCampaignScreen = ({ route, navigation }) => {
           )}
         </View>
       </ScrollView>
-      
+
       {/* Confirmation Dialog */}
       <Portal>
         <Dialog visible={confirmDialog} onDismiss={() => setConfirmDialog(false)}>
