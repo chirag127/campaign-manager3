@@ -1,0 +1,45 @@
+build:
+  provider: github
+  github_token: ${{ secrets.GITHUB_TOKEN }}
+  workflow: ci.yml
+  branch: main
+
+coverage:
+  provider: codecov
+  token: ${{ secrets.CODECOV_TOKEN }}
+
+# This repository name will be dynamically replaced by the Apex framework.
+repo_name: "AdSynk-Unified-Campaign-Management-React-Native-App"
+repo_user: "chirag127"
+
+# Badge definitions:
+# - name: "Build Status"
+#   icon: "github"
+#   url: "https://github.com/{{ repo_user }}/{{ repo_name }}/actions/workflows/ci.yml"
+#   style: "flat-square"
+#   color: "brightgreen"
+# - name: "Code Coverage"
+#   icon: "codecov"
+#   url: "https://codecov.io/gh/{{ repo_user }}/{{ repo_name }}"
+#   style: "flat-square"
+#   color: "brightgreen"
+# - name: "Tech Stack"
+#   icon: "javascript"
+#   url: "https://github.com/{{ repo_user }}/{{ repo_name }}"
+#   style: "flat-square"
+#   color: "blue"
+# - name: "License"
+#   icon: "cc-by-nc"
+#   url: "https://github.com/{{ repo_user }}/{{ repo_name }}/blob/main/LICENSE"
+#   style: "flat-square"
+#   color: "lightgray"
+# - name: "GitHub Stars"
+#   icon: "github"
+#   url: "https://github.com/{{ repo_user }}/{{ repo_name }}"
+#   style: "flat-square"
+#   color: "yellowgreen"
+# - name: "Lint & Format"
+#   icon: "biome"
+#   url: "https://github.com/{{ repo_user }}/{{ repo_name }}"
+#   style: "flat-square"
+#   color: "purple"
