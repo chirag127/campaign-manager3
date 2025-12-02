@@ -1,50 +1,58 @@
-# Node.js
-node_modules/
-.npm
-.env
-.env.production
-.env.development
-.env.local
-.env.*
+# Node.js / Expo / React Native
 
 # Logs
+logs
 *.log
-pm-debug.log*
-npm-debug.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
 
-# Editor/IDE files
+# Runtime data
+pids
+*.pid
+*.seed
+*.pid.lock
+
+# Directory: /dist or /build
+build
+dist
+node_modules/
+
+# IDE directories
 .vscode/
 .idea/
-*.sublime-project
-*.sublime-workspace
+*.iml
+*.ipr
+*.iws
 
 # OS generated files
 .DS_Store
 Thumbs.db
 
-# Build artifacts
-build/
-dist/
+# Environment variables
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
 
-# React Native / Expo
+# Expo specific
 .expo/
-web-build/
-# iOS
-ios/build/
-ios/Pods/
-ios/Podfile.lock
-# Android
-android/build/
-android/.gradle/
-android/app/build/
-android/app/.cxx/
-*.apk
-*.aab
-*.jks
-*.keystore
 
-# Metro bundler cache
-.expo-shared/
+# Jest / Vitest related
+__tests__/
+coverage/
+*.test.js
+*.spec.js
 
-# Storybook artifacts
-storybook-static/
+# npm package manager
+# Uncomment the next line if using Swift package manager (for iOS)
+# Podfile.lock
+# Uncomment the next line if using CocoaPods
+# Pods/
+
+# Bun package manager
+.bun/
+
+# Misc
+*.local
