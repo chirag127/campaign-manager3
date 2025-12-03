@@ -1,90 +1,79 @@
-# Contributing to AdSynk-Unified-Campaign-Management-React-Native-App
+# 🤝 Contributing to AdSynk-Cross-Platform-Ad-Campaign-Manager-App
 
-Thank you for considering contributing to the AdSynk Unified Campaign Management React Native App! We welcome any contributions that align with our mission of providing a powerful, unified dashboard for ad campaign analytics.
+We welcome contributions that enhance the robustness, performance, and feature set of **AdSynk**, the unified Cross-Platform Ad Campaign Manager.
 
-## 1. Code of Conduct
+As an Apex project, we adhere to the highest standards of software engineering. Please review the following guidelines before submitting a Pull Request (PR) or Issue.
 
-This project adheres to the Contributor Covenant Code of Conduct. Please read the [CODE_OF_CONDUCT.md](https://github.com/chirag127/AdSynk-Unified-Campaign-Management-React-Native-App/blob/main/CODE_OF_CONDUCT.md) file to understand the expected standards of behavior.
+## 1. Core Philosophy: Apex Standards
 
-## 2. How to Contribute
+Contributions must align with the **Zero-Defect, High-Velocity, Future-Proof** philosophy. This means prioritizing: 
 
-We accept contributions in the form of:
+*   **Clarity & Maintainability:** Code must be exceptionally readable.
+*   **Performance:** Efficient utilization of React Native/Expo and Node.js backend resources.
+*   **Test Coverage:** New features or bug fixes *must* include corresponding unit/integration tests.
 
-*   **Bug Reports:** Please file an issue detailing the bug, steps to reproduce, and expected vs. actual results. Use the provided bug report template.
-*   **Feature Requests:** Describe the desired feature, its use case, and potential benefits.
-*   **Pull Requests:** Submit well-tested, documented, and formatted code that addresses an issue or implements a requested feature.
+## 2. Development Environment Setup
 
-### 2.1. Development Setup
+To ensure consistency with our CI/CD pipeline, please set up your local environment to mirror the project configuration.
 
-To set up the development environment, follow these steps:
-
-1.  **Clone the Repository:**
+1.  **Fork the Repository:** Fork `chirag127/AdSynk-Cross-Platform-Ad-Campaign-Manager-App` to your account.
+2.  **Clone:** Clone your fork locally:
     bash
-    git clone https://github.com/chirag127/AdSynk-Unified-Campaign-Management-React-Native-App.git
-    cd AdSynk-Unified-Campaign-Management-React-Native-App
+    git clone https://github.com/YOUR_USERNAME/AdSynk-Cross-Platform-Ad-Campaign-Manager-App.git
+    cd AdSynk-Cross-Platform-Ad-Campaign-Manager-App
+    
+3.  **Install Dependencies (Frontend/Backend):
+    bash
+    # Backend (Node.js)
+    npm install
+    
+    # Frontend (Expo)
+    cd packages/frontend # Assuming a monorepo structure, adjust if necessary
+    npx expo install
+    cd ../..
+    
+4.  **Linting & Formatting Check (Crucial Step):
+    Ensure all code conforms to the configured Biome (Frontend) and ESLint/Prettier (Backend) standards before committing.
+    bash
+    npm run lint
+    npm run format:check
     
 
-2.  **Install Dependencies:**
-    This project uses Expo. Ensure you have Node.js (v18+) and Yarn installed.
+## 3. Workflow for Submitting Changes
+
+We utilize the **Feature Branch Workflow** combined with mandatory validation checks.
+
+### A. Reporting Issues
+
+*   Use the official **Bug Report Template** located in `.github/ISSUE_TEMPLATE/bug_report.md`.
+*   Provide clear steps to reproduce, expected vs. actual behavior, and environment details (OS, Device/Emulator, App Version).
+
+### B. Submitting Pull Requests (PRs)
+
+1.  **Create a Branch:** Base all new work off the latest `main` branch and create a feature branch:
     bash
-    yarn install
+    git checkout main
+    git pull upstream main
+    git checkout -b feat/descriptive-feature-name
     
+2.  **Commit Messages:** Follow the **Conventional Commits** specification (e.g., `feat:`, `fix:`, `chore:`, `refactor:`).
+3.  **Target:** All PRs must target the `main` branch.
+4.  **Self-Verification:** Before pushing, run all local tests (`npm run test` for frontend, equivalent for backend). A failing local test suite will result in an immediate PR rejection by the automated CI pipeline.
+5.  **Description:** Use the **PR Template** (`.github/PULL_REQUEST_TEMPLATE.md`) to fully describe the change, linking to any related issues.
 
-3.  **Environment Variables:**
-    Create a `.env` file in the root directory based on the `.env.example` file. You will need to configure API keys for Facebook, Google, and LinkedIn Ads.
+## 4. Architectural Principles
 
-4.  **Run the Application:**
-    *   **Development Server (Expo Go):**
-        bash
-        yarn start
-        
-        Scan the QR code with the Expo Go app on your physical device or run on an emulator.
-    *   **iOS Simulator:**
-        bash
-        yarn ios
-        
-    *   **Android Emulator:**
-        bash
-        yarn android
-        
+Adherence to these patterns ensures system longevity and scalability:
 
-## 3. Branching and Pull Requests
+*   **SOLID:** Apply the Single Responsibility, Open/Closed, Liskov Substitution, Interface Segregation, and Dependency Inversion principles, especially in the Node.js service layer handling external APIs.
+*   **DRY (Don't Repeat Yourself):** Abstract repetitive logic, particularly in data transformation layers between ad platform APIs and the unified dashboard schema.
+*   **YAGNI (You Ain't Gonna Need It):** Avoid premature optimization or adding speculative features. Deliver only what is required by the current issue or feature specification.
 
-*   **Branching Strategy:** We follow a simplified Gitflow-like strategy. Create a new branch for each feature or bugfix off the `main` branch.
-    *   Feature branches: `feature/your-feature-name`
-    *   Bugfix branches: `fix/issue-number-description`
-*   **Pull Request Guidelines:**
-    *   Ensure your code is well-commented and follows the project's coding style.
-    *   All code must pass linting and testing checks (see `.github/workflows/ci.yml`).
-    *   Write clear commit messages.
-    *   Include a description of your changes in the pull request, referencing any related issues.
-    *   Your pull request will be automatically checked by our CI pipeline.
+## 5. Security Requirements
 
-## 4. Coding Standards
+Security is paramount for an application handling sensitive advertising credentials and data. Review the guidelines in `.github/SECURITY.md`.
 
-This project adheres to the Apex standards, emphasizing:
+*   **NEVER** hardcode API keys or secrets in source code pushed to this repository.
+*   All secrets must be managed via secure environment variables or secrets management systems (referenced in CI/CD).
 
-*   **TypeScript (Strict):** All new JavaScript code should be migrated to TypeScript where possible.
-*   **React Native Best Practices:** Utilize modern React Native patterns and Expo APIs.
-*   **Node.js Backend:** Follow consistent API design and error handling.
-*   **Linting & Formatting:** Use the pre-commit hooks and CI checks to ensure code quality. Tools like ESLint and Prettier (configured via Biome in the Apex stack) should be used.
-*   **Testing:** Write comprehensive unit and integration tests using Vitest and Playwright.
-
-## 5. Architectural Principles
-
-We strive to uphold principles like:
-
-*   **SOLID:** Adherence to the Single Responsibility, Open/Closed, Liskov Substitution, Interface Segregation, and Dependency Inversion principles.
-*   **DRY (Don't Repeat Yourself):** Avoid redundant code by abstracting common logic.
-*   **YAGNI (You Ain't Gonna Need It):** Implement only what is currently required.
-*   **Feature-Sliced Design (FSD):** For frontend components, maintain clear separation of layers (e.g., `entities`, `features`, `widgets`, `pages`, `app`).
-
-## 6. Reporting Security Vulnerabilities
-
-We take security seriously. If you discover a security vulnerability, please follow the guidelines in the [SECURITY.md](https://github.com/chirag127/AdSynk-Unified-Campaign-Management-React-Native-App/blob/main/SECURITY.md) file.
-
-## 7. Getting Help
-
-If you have questions or need clarification, please open an issue or reach out on the project's discussion forum (if available).
-
----
+Thank you for helping us maintain a high-quality, high-performance Ad Management Platform.
