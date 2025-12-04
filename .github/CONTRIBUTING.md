@@ -1,79 +1,68 @@
-# 🤝 Contributing to AdSynk-Cross-Platform-Ad-Campaign-Manager-App
+# 🤝 Contributing to AdSynk-Unified-Campaign-Management-React-Native-App
 
-We welcome contributions that enhance the robustness, performance, and feature set of **AdSynk**, the unified Cross-Platform Ad Campaign Manager.
+As an Apex Technical Authority project, contributions must adhere to the highest standards of quality, performance, and architectural integrity. We prioritize **Zero-Defect, High-Velocity, Future-Proof** development.
 
-As an Apex project, we adhere to the highest standards of software engineering. Please review the following guidelines before submitting a Pull Request (PR) or Issue.
+This repository follows the **Single Source of Truth (SSOT)** philosophy, meaning all documentation (especially in `AGENTS.md`) must be respected and kept current.
 
-## 1. Core Philosophy: Apex Standards
+## 1. Architectural Alignment & Prerequisites
 
-Contributions must align with the **Zero-Defect, High-Velocity, Future-Proof** philosophy. This means prioritizing: 
+Before submitting any Pull Request (PR), ensure your contribution respects the established 2025/2026 architecture, as detailed in the `AGENTS.md` directive file.
 
-*   **Clarity & Maintainability:** Code must be exceptionally readable.
-*   **Performance:** Efficient utilization of React Native/Expo and Node.js backend resources.
-*   **Test Coverage:** New features or bug fixes *must* include corresponding unit/integration tests.
+*   **Language Standard:** Strict **TypeScript** usage is enforced for the React Native frontend (Expo) and **ES6+ JavaScript/Node.js** for the backend (Express/MongoDB).
+*   **State Management:** All state manipulation must be atomic and predictable. Favor functional purity.
+*   **API Contracts:** Any new API integration or backend logic **MUST** include integration tests conforming to the structure defined in the CI pipeline (`ci.yml`).
 
-## 2. Development Environment Setup
+## 2. The Development Workflow
 
-To ensure consistency with our CI/CD pipeline, please set up your local environment to mirror the project configuration.
+We use a robust branch protection model. All changes should flow through feature branches and be submitted via Pull Request.
 
-1.  **Fork the Repository:** Fork `chirag127/AdSynk-Cross-Platform-Ad-Campaign-Manager-App` to your account.
+1.  **Fork:** Fork this repository.
 2.  **Clone:** Clone your fork locally:
     bash
-    git clone https://github.com/YOUR_USERNAME/AdSynk-Cross-Platform-Ad-Campaign-Manager-App.git
-    cd AdSynk-Cross-Platform-Ad-Campaign-Manager-App
+    git clone https://github.com/YOUR_USERNAME/AdSynk-Unified-Campaign-Management-React-Native-App.git
+    cd AdSynk-Unified-Campaign-Management-React-Native-App
     
-3.  **Install Dependencies (Frontend/Backend):
+3.  **Branch:** Create a descriptive feature branch:
     bash
-    # Backend (Node.js)
-    npm install
+    git checkout -b feature/short-descriptive-name
     
-    # Frontend (Expo)
-    cd packages/frontend # Assuming a monorepo structure, adjust if necessary
-    npx expo install
-    cd ../..
-    
-4.  **Linting & Formatting Check (Crucial Step):
-    Ensure all code conforms to the configured Biome (Frontend) and ESLint/Prettier (Backend) standards before committing.
-    bash
-    npm run lint
-    npm run format:check
-    
+4.  **Development & Verification:** Implement your changes. Crucially, run local verification steps before committing.
+    *   **LINT/FORMAT:** Ensure zero violations before committing.
+        bash
+        npm run lint
+        npm run format
+        
+    *   **TESTING (Unit/Integration):** Run local validation suites.
+        bash
+        npm run test:unit
+        # For backend API changes:
+        npm run test:e2e
+        
+5.  **Commit:** Use conventional commits (`feat:`, `fix:`, `chore:`).
+6.  **Push & PR:** Push your branch and open a Pull Request against the `main` branch.
 
-## 3. Workflow for Submitting Changes
+## 3. Pull Request Submission Standards
 
-We utilize the **Feature Branch Workflow** combined with mandatory validation checks.
+Every PR must be accompanied by a detailed description using the provided template (`.github/PULL_REQUEST_TEMPLATE.md`).
 
-### A. Reporting Issues
+**Mandatory Requirements for PR Acceptance:**
 
-*   Use the official **Bug Report Template** located in `.github/ISSUE_TEMPLATE/bug_report.md`.
-*   Provide clear steps to reproduce, expected vs. actual behavior, and environment details (OS, Device/Emulator, App Version).
+*   **Passing CI:** All GitHub Actions checks (Build, Lint, Test) must pass green upon review.
+*   **Documentation Update:** If you modify core logic, update `AGENTS.md` if necessary to reflect new architectural directives or toolchain utilization.
+*   **Code Review:** A minimum of one maintainer approval is required. Be responsive to feedback.
+*   **Security Consciousness:** All contributions must be vetted against potential injection vectors (especially in API handlers) and sensitive data handling.
 
-### B. Submitting Pull Requests (PRs)
+## 4. Reporting Issues
 
-1.  **Create a Branch:** Base all new work off the latest `main` branch and create a feature branch:
-    bash
-    git checkout main
-    git pull upstream main
-    git checkout -b feat/descriptive-feature-name
-    
-2.  **Commit Messages:** Follow the **Conventional Commits** specification (e.g., `feat:`, `fix:`, `chore:`, `refactor:`).
-3.  **Target:** All PRs must target the `main` branch.
-4.  **Self-Verification:** Before pushing, run all local tests (`npm run test` for frontend, equivalent for backend). A failing local test suite will result in an immediate PR rejection by the automated CI pipeline.
-5.  **Description:** Use the **PR Template** (`.github/PULL_REQUEST_TEMPLATE.md`) to fully describe the change, linking to any related issues.
+If you encounter a bug or wish to propose a feature, please use the provided issue templates in `.github/ISSUE_TEMPLATE/`.
 
-## 4. Architectural Principles
+*   **Bug Reports:** Use `bug_report.md`. Provide clear steps to reproduce, expected vs. actual results, and environment details (Node version, device OS, etc.).
+*   **Feature Requests:** Detail the business value and architectural implication of the request.
 
-Adherence to these patterns ensures system longevity and scalability:
+## 5. Code of Conduct
 
-*   **SOLID:** Apply the Single Responsibility, Open/Closed, Liskov Substitution, Interface Segregation, and Dependency Inversion principles, especially in the Node.js service layer handling external APIs.
-*   **DRY (Don't Repeat Yourself):** Abstract repetitive logic, particularly in data transformation layers between ad platform APIs and the unified dashboard schema.
-*   **YAGNI (You Ain't Gonna Need It):** Avoid premature optimization or adding speculative features. Deliver only what is required by the current issue or feature specification.
+This project enforces a professional and respectful environment. Please review the [Code of Conduct](https://github.com/chirag127/AdSynk-Unified-Campaign-Management-React-Native-App/blob/main/.github/CODE_OF_CONDUCT.md) (Note: This file is assumed generated as part of the Standard 11 mandate, though not explicitly requested here for output).
 
-## 5. Security Requirements
+--- 
 
-Security is paramount for an application handling sensitive advertising credentials and data. Review the guidelines in `.github/SECURITY.md`.
-
-*   **NEVER** hardcode API keys or secrets in source code pushed to this repository.
-*   All secrets must be managed via secure environment variables or secrets management systems (referenced in CI/CD).
-
-Thank you for helping us maintain a high-quality, high-performance Ad Management Platform.
+*By contributing, you agree to license your contributions under the terms specified in the `LICENSE` file (CC BY-NC 4.0).* 
