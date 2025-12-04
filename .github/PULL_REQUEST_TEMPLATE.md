@@ -1,68 +1,72 @@
 # Pull Request Template
 
-## PR Checklist
+**Project:** `AdSynk-Unified-Campaign-Management-React-Native-App`
+**Author:** `chirag127`
 
-Please ensure the following criteria are met before submitting your pull request:
+## 1. PR Checklist
 
-*   [ ] **Code Quality:** The code adheres to the established coding standards and best practices for React Native, Node.js, and JavaScript.
-*   [ ] **Testing:** All new and modified code is covered by comprehensive unit and integration tests.
-*   [ ] **Linting & Formatting:** The code passes all lints and formatting checks using the project's defined tools (e.g., ESLint, Prettier, or Biome if adopted).
-*   [ ] **Documentation:** Relevant code changes have been documented (e.g., inline comments, README updates if necessary).
-*   [ ] **Branching Strategy:** The branch is up-to-date with the main branch and there are no merge conflicts.
-*   [ ] **AI Agent Compliance:** The changes align with the directives specified in `AGENTS.md`, particularly regarding architectural patterns and security.
-*   [ ] **User Experience:** The changes enhance or maintain a positive user experience across supported platforms.
+Before submitting your Pull Request, please ensure you have:
 
-## Description
+- [ ] Read and understood the [Contributing Guidelines](https://github.com/chirag127/AdSynk-Unified-Campaign-Management-React-Native-App/blob/main/.github/CONTRIBUTING.md).
+- [ ] Verified that your changes align with the project's architectural principles and the directives in [AGENTS.md](https://github.com/chirag127/AdSynk-Unified-Campaign-Management-React-Native-App/blob/main/AGENTS.md).
+- [ ] Ensured all new code follows the linting and formatting standards enforced by Ruff and Prettier.
+- [ ] Added comprehensive unit and integration tests for any new or modified functionality.
+- [ ] Successfully passed all CI checks (linting, testing, build).
+- [ ] Updated relevant documentation (e.g., README.md, AGENTS.md) if your changes impact project setup, usage, or architecture.
+- [ ] Reviewed your code for potential security vulnerabilities, adhering to the guidelines in [SECURITY.md](https://github.com/chirag127/AdSynk-Unified-Campaign-Management-React-Native-App/blob/main/.github/SECURITY.md).
+- [ ] Ensured that the project name and description in `package.json` and `app.json` (or equivalent) are accurate.
 
-Provide a clear and concise description of the changes introduced in this pull request. Explain the problem being solved, the approach taken, and any potential impacts.
+## 2. Description
 
-## Related Issues
+Provide a clear and concise summary of the changes introduced in this Pull Request. Explain the *what* and the *why* behind your modifications.
 
-Link any relevant issues here (e.g., `Fixes #123`, `Closes #456`).
+**What:**
 
-## Changes Made
+**Why:**
 
-*   [List of key changes]
-*   [New features]
-*   [Bug fixes]
-*   [Refactorings]
+## 3. Type of Change
 
-## How to Test
+<!-- Please mark the relevant options with an [x] -->
 
-Provide step-by-step instructions on how to test the changes introduced in this pull request. Include any necessary setup or specific scenarios.
+- [ ] Bug fix (non-breaking change which fixes an issue)
+- [ ] New feature (non-breaking change which adds functionality)
+- [ ] Breaking change (fix or feature that would cause existing functionality to not work as expected)
+- [ ] Documentation update
+- [ ] Refactoring (code style, etc.)
+- [ ] Performance improvements
+- [ ] Other (please specify):
 
-## Screenshots/Recordings (if applicable)
+## 4. Motivation & Context
 
-Add screenshots or screen recordings to visually demonstrate the changes, especially for UI modifications.
+Explain the problem this PR solves or the feature it adds. Reference any relevant issues, discussions, or design documents.
 
----
-## AI AGENT DIRECTIVES RECAP
+**Related Issue(s):**
+#
 
-This PR is expected to align with the following core principles and technical directives:
+## 5. Proposed Solution
 
-*   **Apex Identity:** Adherence to the **APEX TECHNICAL AUTHORITY & ELITE ARCHITECT** standards.
-*   **Prime Directive:** Maintain **Zero-Defect, High-Velocity, Future-Proof** development.
-*   **Context:** Operating under **December 2025 / 2026 Standards**.
+Detail how you've addressed the problem or implemented the new feature. Include any architectural decisions made and trade-offs considered.
 
-### Project-Specific Stack & Architecture (AdSynk - React Native / Node.js)
+## 6. Screenshots/Recordings (If applicable)
 
-*   **Platform:** Cross-Platform Mobile Application.
-*   **Frontend Stack:** React Native (Expo) with TypeScript.
-*   **Backend Stack:** Node.js.
-*   **Data Storage:** MongoDB.
-*   **Architecture:** Modular Monolith with a focus on clear API integrations and dashboard presentation. Adherence to principles like **SOLID, DRY, YAGNI** is paramount.
+For UI changes, please provide screenshots or recordings to demonstrate the visual impact.
 
-### Testing & Verification Strategy
+## 7. Testing
 
-*   **Unit Testing:** Comprehensive unit tests for both React Native components and Node.js backend logic, preferably using **Vitest** and **Jest**.
-*   **Integration Testing:** End-to-end integration tests to validate API interactions and data flow between frontend and backend.
-*   **E2E Testing:** Utilize **Playwright** for end-to-end validation of the user experience across platforms.
+Describe the tests you have added or modified. Detail the testing strategy used (e.g., unit, integration, end-to-end) and how to run them.
 
-### Security Mandate
+**Testing Strategy:**
 
-*   **Input Validation:** Rigorous validation of all user inputs and API payloads.
-*   **Dependency Scanning:** Regular scans for vulnerabilities in project dependencies.
-*   **Secure API Integrations:** Ensure all external API calls are authenticated and secured.
+**How to Run Tests:**
+bash
+# Example commands (adjust as necessary)
+npx vitest run
 
----
-**Repository:** `https://github.com/chirag127/AdSynk-Cross-Platform-Ad-Campaign-Manager-App`
+
+## 8. Deployment Considerations (If applicable)
+
+Are there any specific deployment steps or considerations required for this change?
+
+## 9. Future Enhancements (Optional)
+
+Are there any follow-up tasks or potential improvements that could be made based on this work?
